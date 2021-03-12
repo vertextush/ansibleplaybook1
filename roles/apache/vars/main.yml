@@ -1,0 +1,5 @@
+---
+# vars file for apache
+# Variables related to the Tomcat installation
+version: apache-tomcat-8.5.63
+remote_dest_path: /usr/tomcat

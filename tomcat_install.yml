@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: add hosts to group
+      add_host:
+         name: "{{ item }}"
+         groups: web-servers
+      with_items: "{{ lookup('env', 'target_host') }}"
+
+ 
+
+- hosts: web-servers
+  gather_facts: true
+
+ 
+
+  tasks:
+    - name: Calling Tomcat role
+      include_role:
+          name: apache

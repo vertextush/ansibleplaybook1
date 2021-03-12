@@ -1,0 +1,14 @@
+---
+# tasks file for java
+
+- name: copy of tar file
+  copy:
+    src: '{{ binarypath }}/{{ version }}.tar.gz '
+    dest: '{{remote_install_path}}'
+    
+- name: Unarchive a java tar file
+  unarchive:
+    src: '{{ remote_install_path }}/{{ version }}.tar.gz  '
+    dest: "{{ remote_install__path }}"
+    remote_src: yes
+

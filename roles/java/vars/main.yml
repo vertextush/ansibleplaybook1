@@ -1,0 +1,7 @@
+---
+# vars file for java
+
+binarypath: /tmp
+version: jdk-8u281-linux-x64
+remote_install_path: /usr/java
+

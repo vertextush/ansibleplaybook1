@@ -1,0 +1,39 @@
+---
+
+- name: make a directory name tomcat 
+  file:
+    path: /usr/tomcat
+    state: directory
+
+- name: copy of tar file
+  copy:
+    src: '/opt/tomcat/{{ version }}.tar.gz'
+    dest: '{{ remote_dest_path }}'
+
+- name: Unarchive a tomcat  tar file
+  unarchive:
+    src: '/usr/tomcat/{{ version }}.tar.gz'
+    dest: '{{ remote_dest_path }}'
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+    mode: 0777
+
+- name: port add in firewall
+  firewalld:
+    port: 8080/tcp
+    permanent: yes
+    state: enabled
+
+- name: reload firewall
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: configuring tomcat-user
+  template:
+        src: user.j2
+        dest: '/usr/tomcat/{{ version }}/conf/tomcat-users.xml'
+ 
+
+- name: Run Tomcat
+  shell: 'nohup  /usr/tomcat/{{ version }}/bin/startup.sh'
